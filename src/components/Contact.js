@@ -103,7 +103,9 @@ export default class Contact extends React.Component {
                 <ContactDetails 
                     isSelected={this.state.selectedKey != -1}
                     contact={this.state.contactData[this.state.selectedKey]}/>
-                <ContactCreate/>
+                <ContactCreate
+                    onCreate={this.handleCreate}
+                />
             </div>
         )
     }
