@@ -9,6 +9,8 @@ export default class ContactCreate extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handleChange(e) {
@@ -29,6 +31,16 @@ export default class ContactCreate extends React.Component {
             name: '',
             phone: ''
         });
+
+        // id가 아닌 ref를 사용하여 포커 스
+        this.nameInput.focus();
+    }
+
+    handleKeyPress(e) {
+        // 엔터 입력시
+        if(e.charCode===13) {
+            this.handleClick();
+        }
     }
     
     render() {
@@ -43,6 +55,7 @@ export default class ContactCreate extends React.Component {
                             placeholder="name"
                             value={this.state.name}
                             onChange={this.handleChange}
+                            ref={(ref) => this.nameInput = ref}  // ref callabck function 을 이용하여 포커스하기
                         />
                     </p>
                     <p>
@@ -52,6 +65,7 @@ export default class ContactCreate extends React.Component {
                             placeholder="phone"
                             value={this.state.phone}
                             onChange={this.handleChange}
+                            onKeyPress={this.handleKeyPress}
                         />
                     </p>
                 </div>
@@ -61,10 +75,10 @@ export default class ContactCreate extends React.Component {
     }
 }
 
-ContactCreate.propTypes = {
-    onCreate: React.PropTypes.func
-};
-
 ContactCreate.defaultProps = {
     onCreate: () => { console.log('onCraete not defined'); }
 }
+
+// ContactCreate.propTypes = {
+//     onCreate: React.PropTypes.func
+// };

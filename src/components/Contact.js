@@ -28,6 +28,23 @@ export default class Contact extends React.Component {
         this.handleRemove = this.handleRemove.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
     }
+
+    componentWillMount() {
+        const contactData = localStorage.contactData;
+
+        if(contactData) {
+            this.setState({
+                contactData: JSON.parse(contactData)
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevState.contactData) != JSON.stringify(this.state.contactData)) {
+            localStorage.contactData = JSON.stringify(this.state.contactData);
+        }
+    }
+    // localStorage.clear(); 콘솔에 입력하면 스토리지 초기화
     
     handleCreate(contact) {
         this.setState({
@@ -108,7 +125,7 @@ export default class Contact extends React.Component {
                     isSelected={this.state.selectedKey != -1}
                     contact={this.state.contactData[this.state.selectedKey]}
                     onRemove={this.handleRemove}    
-                    onEdit={this.handleEdit}
+                    onEdit={this.handleEdit} 
                 />
                 <ContactCreate
                     onCreate={this.handleCreate}

@@ -13,6 +13,7 @@ export default class ContactDetails extends React.Component {
         this.handleToggle = this.handleToggle.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     handleToggle() {
@@ -41,6 +42,12 @@ export default class ContactDetails extends React.Component {
         this.props.onEdit(this.state.name, this.state.phone);
     }
 
+    // 엔터 누르면 입력
+    handleKeyPress(e) {
+        if(e.charCode===13) {
+            this.handleToggle();
+        }
+    }
     render() {
         const details = (
             <div>
@@ -58,7 +65,6 @@ export default class ContactDetails extends React.Component {
                         placeholder="name"
                         value={this.state.name}
                         onChange={this.handleChange}
-                        onEdit={this.handleEdit}
                     />
                 </p>
                 <p>
@@ -68,7 +74,7 @@ export default class ContactDetails extends React.Component {
                         placeholder="phone"
                         value={this.state.phone}
                         onChange={this.handleChange}
-                        onEdit={this.handleEdit}
+                        onKeyPress={this.handleKeyPress}
                     />
                 </p>
             </div>
@@ -94,14 +100,14 @@ export default class ContactDetails extends React.Component {
 ContactDetails.defaultProps = {
     contact: {
         name: '',
-        phone: '',
+        phone: ''
     },
     onRemove: () => { console.error('onRemove not defined'); },
     onEdit: () => { console.error('onEdit not defined'); }
-}
+};
 
-ContactDetails.propTypes = {
-    contact: React.PropTypes.object,
-    onRemove: React.PropTypes.func,
-    onEdit: React.PropTypes.func
-}
+// ContactDetails.propTypes = {
+//     contact: React.PropTypes.object,
+//     onRemove: React.PropTypes.func,
+//     onEdit: React.PropTypes.func
+// }
