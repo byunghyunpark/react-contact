@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
     entry: './src/index.js',
 
@@ -7,9 +9,11 @@ module.exports = {
     },
 
     devServer: {
+        hot: true,
         inline: true,
-        port: 7777,
-        contentBase: __dirname + '/public'
+        host: '0.0.0.0',
+        port: 4000,
+        contentBase: __dirname + '/public/',
     },
 
     module:
@@ -17,13 +21,16 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                loader: 'babel',
-                exclude: /node_modules/,
-                query: {
+                loaders: ['react-hot', 'babel?' + JSON.stringify({
                     cacheDirectory: true,
                     presets: ['es2015', 'stage-0', 'react']
-                }
+                })],
+                exclude: /node_modules/,
             }
         ]
-    }
+    },
+
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 };
